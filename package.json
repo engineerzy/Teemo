@@ -1,0 +1,40 @@
+{
+  "name": "react-teemo",
+  "version": "1.0.0",
+  "description": "'基于redux-saga模仿dva的react状态管理器 '",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/engineerzy/Teemo.git"
+  },
+  "keywords": [
+    "react",
+    "dva",
+    "temmo",
+    "redux-saga"
+  ],
+  "author": "zhou yang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/engineerzy/Teemo/issues"
+  },
+  "homepage": "https://github.com/engineerzy/Teemo#readme",
+  "dependencies": {
+    "@types/dva": "^1.1.0",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.1.1",
+    "webpack": "^4.41.2"
+  },
+  "devDependencies": {
+    "@types/redux": "^3.6.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.6.4",
+    "webpack-cli": "^3.3.10"
+  }
+}

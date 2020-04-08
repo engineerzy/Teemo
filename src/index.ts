@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga';
 import createSaga from "./createSaga"
 
-export default function({models}) {
+export default function({models}): object {
     const initSaga = createSaga(models)
     const rootSaga = initSaga.createEffects
     const reducers = initSaga.createReducers()

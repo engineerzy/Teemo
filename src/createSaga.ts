@@ -2,7 +2,16 @@ import * as reduxSaga from 'redux-saga/effects';
 let { put, call, select, take, fork, cancel } = reduxSaga
 const sagaPut = put
 
+type IModel = {
+    namespace?: string,
+    state?: object,
+    reducers?: object,
+    effect?: object
+}
 class createSaga {
+    private models: Array<IModel> | IModel
+    private reducers: object
+
     constructor(models = []) {
         this.models = models
         this.reducers = {}
@@ -12,12 +21,12 @@ class createSaga {
      *检查models是否为数组或对象
      * @memberof createSaga
      */
-    checkModels() {
+    checkModels(): void {
         const models_type = Object.prototype.toString.call(this.models)
         if (models_type !== '[object Object]' && models_type !== '[object Array]') {
             throw new Error("请确保传入的模块为数组或模块对象")
         } else if (models_type !== '[object Array]') {
-            this.models = [this.models]
+            this.models = [...this.models]
         }
     }
 
@@ -29,12 +38,12 @@ class createSaga {
      * @returns
      * @memberof createSaga
      */
-    moudlePrefix(model,type) {
-        if(type !== 'reducers' && type !== 'effect') return;
+    moudlePrefix(model: IModel, type: 'reducers' | 'effect' ) {
+        if (type !== 'reducers' && type !== 'effect') return;
         const modelProperty = model[type]
         for (const key in modelProperty) {
             if (modelProperty.hasOwnProperty(key)) {
-                modelProperty[`${model.namespace}/${key}`] =modelProperty[key]
+                modelProperty[`${model.namespace}/${key}`] = modelProperty[key]
                 Reflect.deleteProperty(modelProperty, key)
             }
         }
@@ -70,7 +79,7 @@ class createSaga {
             let lastTask
             while (true) {
                 // 获取dispatch 的action参数
-                const payload = yield take( key)
+                const payload = yield take(key)
                 // 如果上已有上一个任务，则取消上一个任务，构建高阶api
                 if (lastTask) {
                     yield cancel(lastTask)
@@ -94,7 +103,7 @@ class createSaga {
     *createEffects() {
         const _this = this
         for (const model of this.models) {
-            _this.moudlePrefix(model,'effect')
+            _this.moudlePrefix(model, 'effect')
             // 每一个model都生成有个saga
             const { effect, namespace } = model
             for (const key in effect) {
@@ -116,7 +125,7 @@ class createSaga {
      */
     createReducers() {
         for (const model of this.models) {
-            this.moudlePrefix(model,'reducers')
+            this.moudlePrefix(model, 'reducers')
             this.reducers[model.namespace] = (state = model.state, action = {}) => (
                 model.reducers[action.type] ? model.reducers[action.type](state, action) : state
             )

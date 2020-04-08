@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "module": "commonjs",
+        "target": "es5",
+		"jsx": "react",
+		"downlevelIteration": true,
+		"typeRoots": [
+			"node_modeules/@types",
+			"src/index.d.ts"
+		],
+		"lib": [
+			"esnext"
+		]
+	},
+	"include": ["./src/**/*"],
+	"exclude": ["./node_modules/**/*"],
+}
