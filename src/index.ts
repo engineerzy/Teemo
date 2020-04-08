@@ -11,6 +11,7 @@ export default function({models}): object {
         combineReducers(reducers),
         applyMiddleware(sagaMiddleware)
     )
+    
     sagaMiddleware.run(rootSaga.bind(initSaga))
     return store;
 }
